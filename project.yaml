@@ -1,0 +1,176 @@
+Project:
+  Name: "E Commerce Platform"
+  Description: "A platform to sell products"
+
+  C_Backend:
+    Template: "hub/express.js"
+    P_AddProduct:
+      Name: "Add Product"
+      Description: "Add a product to the platforms database"
+      Input:
+        Type: "Object"
+        Properties:
+          Name:
+            Type: "String"
+            Description: "Name of the product"
+          Price:
+            Type: "Number"
+            Description: "Price of the product"
+          Description:
+            Type: "String"
+            Description: "Description of the product"
+      Output:
+        Type: "Object"
+        Properties:
+          ProductId:
+            Type: "String"
+            Description: "Id of the product"
+          Name:
+            Type: "String"
+            Description: "Name of the product"
+          Price:
+            Type: "Number"
+            Description: "Price of the product"
+          Description:
+            Type: "String"
+            Description: "Description of the product"
+
+    P_GetProduct:
+      Name: "Get Product"
+      Description: "Get a product from the platforms database"
+      Input:
+        Type: "Object"
+        Properties:
+          ProductId:
+            Type: "String"
+            Description: "Id of the product"
+      Output:
+        Type: "Object"
+        Properties:
+          ProductId:
+            Type: "String"
+            Description: "Id of the product"
+          Name:
+            Type: "String"
+            Description: "Name of the product"
+          Price:
+            Type: "Number"
+            Description: "Price of the product"
+          Description:
+            Type: "String"
+            Description: "Description of the product"
+    GLUE:
+      code: "@/backend/"
+      description: "Glue code for the backend, this code will be executed when the component is deployed"
+      dependencies: [ "P_AddProduct", "P_GetProduct" ]
+  C_Frontend:
+    Template: "hub/react.js"
+    P_AddProduct:
+      Name: "Add Product"
+      Description: "Send the product to the C_Backend component to add it to the platform"
+      Input:
+        Type: "Object"
+        Properties:
+          Name:
+            Type: "String"
+            Description: "Name of the product"
+          Price:
+            Type: "Number"
+            Description: "Price of the product"
+          Description:
+            Type: "String"
+            Description: "Description of the product"
+      Output:
+        Type: "Object"
+        Properties:
+          ProductId:
+            Type: "String"
+            Description: "Id of the product"
+          Name:
+            Type: "String"
+            Description: "Name of the product"
+          Price:
+            Type: "Number"
+            Description: "Price of the product"
+          Description:
+            Type: "String"
+            Description: "Description of the product"
+
+    P_GetProduct:
+      Name: "Get Product"
+      Description: "Get a product from the platform"
+      Input:
+        Type: "Object"
+        Properties:
+          ProductId:
+            Type: "String"
+            Description: "Id of the product"
+      Output:
+        Type: "Object"
+        Properties:
+          ProductId:
+            Type: "String"
+            Description: "Id of the product"
+          Name:
+            Type: "String"
+            Description: "Name of the product"
+          Price:
+            Type: "Number"
+            Description: "Price of the product"
+          Description:
+            Type: "String"
+            Description: "Description of the product"
+
+    P_ProductsPage:
+      Name: "Products Page"
+      Description: "Show all the products on the platform"
+      Input:
+        Type: "Object"
+        Properties:
+          Products:
+            Type: "Array"
+            Description: "Array of products"
+            Items:
+              Type: "Object"
+              Properties:
+                ProductId:
+                  Type: "String"
+                  Description: "Id of the product"
+                Name:
+                  Type: "String"
+                  Description: "Name of the product"
+                Price:
+                  Type: "Number"
+                  Description: "Price of the product"
+                Description:
+                  Type: "String"
+                  Description: "Description of the product"
+      Output:
+        Type: "React Component"
+        Description: "React component that shows all the products on the platform"
+
+    P_ProductPage:
+      Name: "Product Page"
+      Description: "Show a product on the platform"
+      Input:
+        Type: "Object"
+        Properties:
+          Product:
+            Type: "Object"
+            Description: "Product"
+            Properties:
+              ProductId:
+                Type: "String"
+                Description: "Id of the product"
+              Name:
+                Type: "String"
+                Description: "Name of the product"
+              Price:
+                Type: "Number"
+                Description: "Price of the product"
+              Description:
+                Type: "String"
+                Description: "Description of the product"
+      Output:
+        Type: "React Component"
+        Description: "React component that shows a product on the platform"
