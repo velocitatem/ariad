@@ -62,10 +62,3 @@ Project:
 
 
 Once you have your definition written, you can put it into the root directory of your project (we will probably have an npm installer soon). You will be able to open the UI for either managing the project or just working on certain parts.
-
-
-
-
-
-
-```
