@@ -36,29 +36,103 @@ Ariad offers two primary views - the admin view and the working view. The admin 
 
 Ariad projects are entirely declared in YAML. This includes defining the project's structure, Components, and their interactions. Here's an example of how a project can be declared:
 
+1. The YAML file starts with the keyword `Project:` followed by the project details.
+2. The project details include:
+   - `Name:`: The name of the project.
+   - `Description:`: A brief description of the project.
+   - A list of components, each starting with a unique identifier like `C_Backend:` or `C_Frontend:`.
+3. Each component has:
+   - `Name:`: The name of the component.
+   - `Description:`: A brief description of the component.
+   - A list of parts, each starting with a unique identifier like `P_AddProduct:` or `P_GetProduct:`.
+4. Each part has:
+   - `Name:`: The name of the part.
+   - `Description:`: A brief description of the part.
+   - `Input:`: The input details, which include:
+     - `Name:`: The name of the input.
+     - `Type:`: The type of the input.
+     - `Description:`: A brief description of the input.
+     - `Properties:`: The properties of the input, each with a `Name:`, `Type:`, and `Description:`.
+     - `Value:`: The value of the input.
+   - `Output:`: The output details, similar to the input details.
+5. Each component also has a `GLUE:` section that describes the flow of data between the parts. It includes:
+   - `Graph:`: The flow of data, represented as `Part1 -> Part2`.
+   - `Description:`: A brief description of the data flow.
+
+Here's an example of a project definition in YAML:
+
 ```yaml
 Project:
-  Name: "E Commerce Platform"
-  Description: "A platform to sell products"
-
-  C_YourComponent:
-    Template: "hub/tech_stack" # This will fetch a template for a specific tech stack,
-    # a tech stack might be an express server or a react app or a flask server
-    P_YourPart:
-      Name: "What you call your part"
-      Description: "What your part should do"
+  Name: Pizza Project
+  Description: A simple project with a cook and eater component
+  C_Cook:
+    Name: Pizza Maker
+    Description: Handles the pizza making process
+    P_MakePizza:
+      Name: Make Pizza
+      Description: Makes a pizza from given ingredients
       Input:
-        Type: "Object/String/Int"
-        Description: "What your input is"
+        Name: ingredients
+        Type: Object
+        Description: Object containing the details of the ingredients
+        Properties:
+          Dough:
+            Type: String
+            Description: Type of dough
+          Sauce:
+            Type: String
+            Description: Type of sauce
+          Toppings:
+            Type: Array
+            Description: Array of toppings
+        Value: '{"Dough": "Thin crust", "Sauce": "Tomato", "Toppings": ["Cheese", "Pepperoni"]}'
       Output:
-        Type: "Object/String/Int"
-        Description: "What your output is"
+        Name: pizza
+        Type: Object
+        Description: Object containing the details of the pizza
+        Properties:
+          Dough:
+            Type: String
+            Description: Type of dough
+          Sauce:
+            Type: String
+            Description: Type of sauce
+          Toppings:
+            Type: Array
+            Description: Array of toppings
+        Value: '{"Dough": "Thin crust", "Sauce": "Tomato", "Toppings": ["Cheese", "Pepperoni"]}'
     GLUE:
-      Code: "@/directory" # this is where your code for the specific tech stack will go
-      # the route registration of anything else that interacts with the parts
-      Description: "Glue code to hold together parts in the component"
-      Dependencies: "..."
+      Graph: P_MakePizza
+      Description: Connects the pizza making process
+  C_Eater:
+    Name: Pizza Eater
+    Description: Eats the pizza and gives feedback
+    P_EatPizza:
+      Name: Eat Pizza
+      Description: Eats the pizza and gives an appreciation message
+      Input:
+        Name: pizza
+        Type: Object
+        Description: Object containing the details of the pizza
+        Properties:
+          Dough:
+            Type: String
+            Description: Type of dough
+          Sauce:
+            Type: String
+            Description: Type of sauce
+          Toppings:
+            Type: Array
+            Description: Array of toppings
+        Value: '{"Dough": "Thin crust", "Sauce": "Tomato", "Toppings": ["Cheese", "Pepperoni"]}'
+      Output:
+        Name: appreciationMessage
+        Type: String
+        Description: Appreciation message after eating the pizza
+        Value: "The pizza was delicious!"
+    GLUE:
+      Graph: P_EatPizza
+      Description: Connects the pizza eating process
 ```
 
-
-Once you have your definition written, you can put it into the root directory of your project (we will probably have an npm installer soon). You will be able to open the UI for either managing the project or just working on certain parts.
+Some other examples can be found in the `examples` folder.
