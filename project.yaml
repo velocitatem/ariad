@@ -1,176 +1,149 @@
 Project:
-  Name: "E Commerce Platform"
-  Description: "A platform to sell products"
-
+  Name: E-Commerce Platform
+  Description: A platform to sell products
   C_Backend:
-    Template: "hub/express.js"
+    Name: Backend Operations
+    Description: Handles the backend functionalities like product management in the
+      database
     P_AddProduct:
-      Name: "Add Product"
-      Description: "Add a product to the platforms database"
+      Name: Add Product to Database
+      Description: Adds a product to the platform's database
       Input:
-        Type: "Object"
+        Name: productDetails
+        Type: Object
+        Description: Object containing the details of the product to be added
         Properties:
           Name:
-            Type: "String"
-            Description: "Name of the product"
+            Type: String
+            Description: Name of the product
           Price:
-            Type: "Number"
-            Description: "Price of the product"
+            Type: Number
+            Description: Price of the product
           Description:
-            Type: "String"
-            Description: "Description of the product"
+            Type: String
+            Description: Description of the product
+        Value: '{"key": "6L3O9"}'
       Output:
-        Type: "Object"
+        Name: productResponse
+        Type: Object
+        Description: Object containing the response with product ID and details
         Properties:
           ProductId:
-            Type: "String"
-            Description: "Id of the product"
+            Type: String
+            Description: Id of the product
           Name:
-            Type: "String"
-            Description: "Name of the product"
+            Type: String
+            Description: Name of the product
           Price:
-            Type: "Number"
-            Description: "Price of the product"
+            Type: Number
+            Description: Price of the product
           Description:
-            Type: "String"
-            Description: "Description of the product"
-
+            Type: String
+            Description: Description of the product
+        Value: '{"key": "6IDIU"}'
     P_GetProduct:
-      Name: "Get Product"
-      Description: "Get a product from the platforms database"
+      Name: Retrieve Product from Database
+      Description: Fetches a product's details from the platform's database
       Input:
-        Type: "Object"
+        Name: productId
+        Type: Object
+        Description: Object containing the ID of the product to be fetched
         Properties:
           ProductId:
-            Type: "String"
-            Description: "Id of the product"
+            Type: String
+            Description: Id of the product
+        Value: '{"key": "6EWRY"}'
       Output:
-        Type: "Object"
+        Name: productDetails
+        Type: Object
+        Description: Object containing the details of the requested product
         Properties:
           ProductId:
-            Type: "String"
-            Description: "Id of the product"
+            Type: String
+            Description: Id of the product
           Name:
-            Type: "String"
-            Description: "Name of the product"
+            Type: String
+            Description: Name of the product
           Price:
-            Type: "Number"
-            Description: "Price of the product"
+            Type: Number
+            Description: Price of the product
           Description:
-            Type: "String"
-            Description: "Description of the product"
+            Type: String
+            Description: Description of the product
+        Value: '{"key": "KFZVH"}'
     GLUE:
-      code: "@/backend/"
-      description: "Glue code for the backend, this code will be executed when the component is deployed"
-      dependencies: [ "P_AddProduct", "P_GetProduct" ]
+      Graph: P_AddProduct -> P_GetProduct
+      Description: Connects the add and get product processes for backend integration
   C_Frontend:
-    Template: "hub/react.js"
+    Name: Frontend Interface
+    Description: Manages the frontend interactions and UI components for product display
+      and management
     P_AddProduct:
-      Name: "Add Product"
-      Description: "Send the product to the C_Backend component to add it to the platform"
+      Name: Frontend Add Product
+      Description: Interface to add product to the platform via backend
       Input:
-        Type: "Object"
+        Type: Object
+        Description: Object containing the details of the product to be added
         Properties:
           Name:
-            Type: "String"
-            Description: "Name of the product"
+            Type: String
+            Description: Name of the product
           Price:
-            Type: "Number"
-            Description: "Price of the product"
+            Type: Number
+            Description: Price of the product
           Description:
-            Type: "String"
-            Description: "Description of the product"
+            Type: String
+            Description: Description of the product
+        Name: productDetails
+        Value: '{"key": "BMJMY"}'
       Output:
-        Type: "Object"
+        Type: Object
+        Description: Object containing the response with product ID and details
         Properties:
           ProductId:
-            Type: "String"
-            Description: "Id of the product"
+            Type: String
+            Description: Id of the product
           Name:
-            Type: "String"
-            Description: "Name of the product"
+            Type: String
+            Description: Name of the product
           Price:
-            Type: "Number"
-            Description: "Price of the product"
+            Type: Number
+            Description: Price of the product
           Description:
-            Type: "String"
-            Description: "Description of the product"
-
+            Type: String
+            Description: Description of the product
+        Name: productResponse
+        Value: '{"key": "D53BE"}'
     P_GetProduct:
-      Name: "Get Product"
-      Description: "Get a product from the platform"
+      Name: Frontend Get Product
+      Description: Interface to retrieve product details from the platform
       Input:
-        Type: "Object"
+        Type: Object
+        Description: Object containing the ID of the product to be fetched
         Properties:
           ProductId:
-            Type: "String"
-            Description: "Id of the product"
+            Type: String
+            Description: Id of the product
+        Name: productIdObject
+        Value: '{"key": "BM1AB"}'
       Output:
-        Type: "Object"
+        Type: Object
+        Description: Object containing the details of the requested product
         Properties:
           ProductId:
-            Type: "String"
-            Description: "Id of the product"
+            Type: String
+            Description: Id of the product
           Name:
-            Type: "String"
-            Description: "Name of the product"
+            Type: String
+            Description: Name of the product
           Price:
-            Type: "Number"
-            Description: "Price of the product"
+            Type: Number
+            Description: Price of the product
           Description:
-            Type: "String"
-            Description: "Description of the product"
-
-    P_ProductsPage:
-      Name: "Products Page"
-      Description: "Show all the products on the platform"
-      Input:
-        Type: "Object"
-        Properties:
-          Products:
-            Type: "Array"
-            Description: "Array of products"
-            Items:
-              Type: "Object"
-              Properties:
-                ProductId:
-                  Type: "String"
-                  Description: "Id of the product"
-                Name:
-                  Type: "String"
-                  Description: "Name of the product"
-                Price:
-                  Type: "Number"
-                  Description: "Price of the product"
-                Description:
-                  Type: "String"
-                  Description: "Description of the product"
-      Output:
-        Type: "React Component"
-        Description: "React component that shows all the products on the platform"
-
-    P_ProductPage:
-      Name: "Product Page"
-      Description: "Show a product on the platform"
-      Input:
-        Type: "Object"
-        Properties:
-          Product:
-            Type: "Object"
-            Description: "Product"
-            Properties:
-              ProductId:
-                Type: "String"
-                Description: "Id of the product"
-              Name:
-                Type: "String"
-                Description: "Name of the product"
-              Price:
-                Type: "Number"
-                Description: "Price of the product"
-              Description:
-                Type: "String"
-                Description: "Description of the product"
-      Output:
-        Type: "React Component"
-        Description: "React component that shows a product on the platform"
+            Type: String
+            Description: Description of the product
+        Name: requestObjectResponse
+        Value: '{"key": "BUM8K"}'
+    GLUE:
+      Graph: P_AddProduct -> P_GetProduct
+      Description: Connects the add and get product processes for frontend integration
