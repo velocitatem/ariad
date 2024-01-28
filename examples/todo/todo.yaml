@@ -1,0 +1,73 @@
+Project:
+  Name: Todo App
+  Description: A simple Todo application
+  C_TodoManager:
+    Name: Todo Manager
+    Description: Handles the todo list
+    P_AddTodo:
+      Name: Add Todo
+      Description: Adds a todo to the list
+      Input:
+        Name: todoItem
+        Type: String
+        Description: The todo item to be added
+        Value: "Buy groceries"
+      Output:
+        Name: todoList
+        Type: Array
+        Description: The updated todo list
+        Value: ["Buy groceries"]
+    P_RemoveTodo:
+      Name: Remove Todo
+      Description: Removes a todo from the list
+      Input:
+        Name: todoItem
+        Type: String
+        Description: The todo item to be removed
+        Value: "Buy groceries"
+      Output:
+        Name: todoList
+        Type: Array
+        Description: The updated todo list
+        Value: []
+    GLUE:
+      Graph: P_AddTodo -> P_RemoveTodo
+      Description: Connects the add and remove todo processes
+  C_UserInterface:
+    Name: User Interface
+    Description: Displays the todo list
+    P_DisplayTodos:
+      Name: Display Todos
+      Description: Displays the todo list
+      Input:
+        Name: todoList
+        Type: Array
+        Description: The todo list to be displayed
+        Value: []
+      Output:
+        Name: displayMessage
+        Type: String
+        Description: Message displaying the todo list
+        Value: "You have no todos left!"
+    GLUE:
+      Graph: P_DisplayTodos
+      Description: Connects the display todos process
+  C_CLI:
+    Name: Command Line Interface
+    Description: Handles user input and output on the command line
+    P_CLI_Loop:
+      Name: CLI Loop
+      Description: Continuously takes user input and calls the appropriate parts
+      Input:
+        Name: userInput
+        Type: String
+        Description: The user input from the command line
+        Value: "add Buy groceries"
+      Output:
+        Name: outputMessage
+        Type: String
+        Description: The output message to be displayed on the command line
+        Value: "Todo added: Buy groceries"
+    GLUE:
+      Graph: P_CLI_Loop
+      Description: Connects the CLI loop process

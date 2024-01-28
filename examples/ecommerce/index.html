@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Platform</title>
+</head>
+<body>
+<h2>Add Product</h2>
+<form id="addProductForm">
+    Name:<br>
+    <input type="text" id="name"><br>
+    Price:<br>
+    <input type="number" id="price"><br>
+    Description:<br>
+    <input type="text" id="description"><br>
+    <button type="button" onclick="addProduct()">Add Product</button>
+</form>
+
+<h2>Get Product</h2>
+Product ID:<br>
+<input type="text" id="getProductId"><br>
+<button type="button" onclick="getProduct()">Get Product</button>
+
+<div id="productDetails"></div>
+
+
+<script>
+    function addProduct() {
+        var name = document.getElementById('name').value;
+        var price = document.getElementById('price').value;
+        var description = document.getElementById('description').value;
+        var product = {
+            ProductId: new Date().getTime().toString(), // Simple product ID generator
+            Name: name,
+            Price: price,
+            Description: description
+        };
+        fetch('http://localhost:5000/add_product', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(product),
+        })
+            .then(response => response.json())
+            .then(data => alert(JSON.stringify(data)));
+    }
+
+    function getProduct() {
+        var productId = document.getElementById('getProductId').value;
+        var url = 'http://localhost:5000/get_product/' + productId;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                var details = document.getElementById('productDetails');
+                details.innerHTML = JSON.stringify(data);
+            });
+    }
+</script>
+</body>
+</html>
