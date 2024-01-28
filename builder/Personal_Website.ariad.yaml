@@ -1,0 +1,85 @@
+Project:
+  Name: Personal Website
+  Description: A simple personal website that displays a random name and a brief "About
+    Me" section.
+  C_WebServer:
+    Name: Web Server
+    Description: Handles the web server setup and routing.
+    P_SetupServer:
+      Name: Setup Server
+      Description: Sets up a simple web server to serve the personal website.
+      Input: {}
+      Output:
+        Name: serverStatus
+        Type: String
+        Description: Indicates the status of the server setup.
+        Value: Server is running on port 8080.
+    P_RouteHandler:
+      Name: Route Handler
+      Description: Handles routing for the website, particularly the home page.
+      Input: {}
+      Output:
+        Name: routeStatus
+        Type: String
+        Description: Indicates that the home route is ready to serve content.
+        Value: Home route is set up.
+    GLUE:
+      Graph: P_SetupServer -> P_RouteHandler
+      Description: Connects server setup to the routing configuration.
+  C_ContentGenerator:
+    Name: Content Generator
+    Description: Generates dynamic content for the website, including a random name
+      and "About Me" section.
+    P_RandomNameGenerator:
+      Name: Random Name Generator
+      Description: Generates a random name to be displayed on the website.
+      Input: {}
+      Output:
+        Name: randomName
+        Type: String
+        Description: A randomly generated name.
+        Value: Alex Johnson
+    P_AboutMeContent:
+      Name: About Me Content
+      Description: Provides content for the "About Me" section of the website.
+      Input: {}
+      Output:
+        Name: aboutMe
+        Type: String
+        Description: Text content for the "About Me" section.
+        Value: I'm a passionate developer with a love for creating innovative projects.
+    GLUE:
+      Graph: P_RandomNameGenerator -> P_AboutMeContent
+      Description: Connects content generation processes for the website.
+  C_WebPageRenderer:
+    Name: Web Page Renderer
+    Description: Renders the web pages with the generated content.
+    P_RenderHomePage:
+      Name: Render Home Page
+      Description: Renders the home page with dynamic content including a random name
+        and "About Me" section.
+      Input:
+        Name: content
+        Type: Object
+        Description: Object containing the dynamic content to be rendered on the home
+          page.
+        Properties:
+          RandomName:
+            Type: String
+            Description: A randomly generated name.
+            Value: Alex Johnson
+          AboutMe:
+            Type: String
+            Description: Text content for the "About Me" section.
+            Value: I'm a passionate developer with a love for creating innovative
+              projects.
+      Output:
+        Name: homePage
+        Type: HTML
+        Description: HTML content of the home page.
+        Value: '<html><head><title>Personal Website</title></head><body><h1>Welcome,
+          Alex Johnson!</h1><p>About Me: I''m a passionate developer with a love for
+          creating innovative projects.</p></body></html>'
+    GLUE:
+      Graph: P_RenderHomePage
+      Description: Connects the web page rendering process.
