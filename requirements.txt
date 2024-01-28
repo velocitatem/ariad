@@ -1,2 +1,5 @@
 pyyaml
 streamlit
+setuptools
+streamlit_code_editor
+openai
