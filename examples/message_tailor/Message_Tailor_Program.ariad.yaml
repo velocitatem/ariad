@@ -1,0 +1,115 @@
+Project:
+  Name: Message Tailor Program
+  Description: 'A program designed to personalize messages for individual team members
+    across different teams or groups, leveraging GPT models or similar interfaces
+    for content generation, and integrating with a server hosting team/group and member
+    data.
+
+    '
+  C_DataAccess:
+    Name: Team and Member Data Access
+    Description: 'Handles the retrieval of team and member data from a server database,
+      offering an API for query operations.
+
+      '
+    P_GetTeams:
+      Name: Get Teams
+      Description: Retrieves a list of teams/groups
+      Input: {}
+      Output:
+        Name: teamsList
+        Type: Array
+        Description: A list of all teams/groups
+        Value: '[Team A, Team B, Team C]'
+    P_GetMembers:
+      Name: Get Members
+      Description: Retrieves a list of members for a specified team/group
+      Input:
+        Name: teamName
+        Type: String
+        Description: The name of the team/group
+        Value: Team A
+      Output:
+        Name: membersList
+        Type: Array
+        Description: A list of members in the specified team/group
+        Value: '[Member1, Member2, Member3]'
+    GLUE:
+      Graph: P_GetTeams -> P_GetMembers
+      Description: Connects team retrieval to member retrieval for each team
+  C_PersonalizationEngine:
+    Name: Message Personalization Engine
+    Description: 'Generates personalized messages for individual team members based
+      on their data and preferences.
+
+      '
+    P_GenerateMessage:
+      Name: Generate Personalized Message
+      Description: Generates a personalized message for a given member
+      Input:
+        Name: memberData
+        Type: Object
+        Description: Object containing data about the member
+        Properties:
+          Name:
+            Type: String
+            Description: The name of the member
+          Preferences:
+            Type: Object
+            Description: Preferences and interests of the member
+      Output:
+        Name: personalizedMessage
+        Type: String
+        Description: A personalized message tailored to the member
+        Value: Hello, [Name]! Based on your interest in [Interest], we thought you'd
+          like to know about [Topic].
+  C_IntegrationLayer:
+    Name: Communication Integration Layer
+    Description: 'Integrates with communication platforms like WhatsApp to send personalized
+      messages to team members.
+
+      '
+    P_SendMessage:
+      Name: Send Personalized Message
+      Description: Sends a personalized message to a member via WhatsApp
+      Input:
+        Name: messageData
+        Type: Object
+        Description: Object containing the recipient's contact details and the message
+        Properties:
+          Recipient:
+            Type: String
+            Description: The contact number or identifier for the recipient
+          Message:
+            Type: String
+            Description: The personalized message to be sent
+      Output:
+        Name: deliveryStatus
+        Type: String
+        Description: The status of the message delivery
+        Value: Message sent successfully to [Recipient].
+    GLUE:
+      Graph: P_SendMessage
+      Description: Connects message generation to sending messages through a communication
+        platform
+  C_ServerAPI:
+    Name: Server API Specification
+    Description: 'Defines the OPEN API specification for the server hosting team/group
+      and member data.
+
+      '
+    P_OpenAPISpec:
+      Name: Open API Specification
+      Description: Provides the Open API specification for accessing team and member
+        data
+      Input: {}
+      Output:
+        Name: apiSpec
+        Type: Object
+        Description: The Open API specification detailing endpoints and data schema
+        Value: '{swagger: ''2.0'', info: {description: ''API for accessing team and
+          member data''}, paths: {/teams: {get: {...}}, /members/{team}: {get: {...}}}}'
+    GLUE:
+      Graph: P_OpenAPISpec
+      Description: Provides the API specification for integrating with the data access
+        component
