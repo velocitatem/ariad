@@ -53,7 +53,6 @@ def define_project(project_name : str, project_description : str) -> str:
     presence_penalty=0
   )
 
-  print(response)
   txt = response.choices[0].message.content
   txt = txt.replace("```yaml", "").replace("```", "")
   project = yaml.safe_load(txt)

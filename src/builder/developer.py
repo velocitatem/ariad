@@ -2,11 +2,8 @@ from openai import OpenAI
 import yaml
 client = OpenAI()
 
-def generate_code(defintion_file : str):
-  file = defintion_file
-  with open(file, 'r') as file:
-      project = yaml.safe_load(file)
 
+def yaml_text_to_code(yaml_text : str):
   response = client.chat.completions.create(
     model="gpt-4-0125-preview",
     messages=[
@@ -30,10 +27,10 @@ def generate_code(defintion_file : str):
         "role": "assistant",
         "content": "main.py\n---\n```python\n# Global todo list\ntodoList = []\n\n\ndef add_todo(todoItem):\n    \"\"\"Adds a todo item to the list.\"\"\"\n    todoList.append(todoItem)\n    return todoList\n\n\ndef remove_todo(todoItem):\n    \"\"\"Removes a todo item from the list.\"\"\"\n    if todoItem in todoList:\n        todoList.remove(todoItem)\n    return todoList\n\n\ndef display_todos(todoList):\n    \"\"\"Displays the todo list.\"\"\"\n    if not todoList:\n        return \"You have no todos left!\"\n    return \"Your Todos: \" + \", \".join(todoList)\n\ndef cli_loop():\n    global todoList\n    while True:\n        userInput = input(\"Enter command: \")\n        if userInput.startswith(\"add \"):\n            todoItem = userInput[4:]\n            updatedList = add_todo(todoItem)\n            print(f\"Todo added: {todoItem}\")\n        elif userInput.startswith(\"remove \"):\n            todoItem = userInput[7:]\n            updatedList = remove_todo(todoItem)\n            print(f\"Todo removed: {todoItem}\")\n        elif userInput == \"display\":\n            displayMessage = display_todos(todoList)\n            print(displayMessage)\n        elif userInput == \"exit\":\n            break\n        else:\n            print(\"Unknown command. Please use 'add', 'remove', 'display', or 'exit'.\")\n\n# Entry point for the application\ncli_loop()\n```"
       },
-        {
-          "role": "user",
-          "content": f"```yaml\n{project}\n```"
-        }
+      {
+        "role": "user",
+        "content": f"```yaml\n{yaml_text}\n```"
+      }
     ],
     temperature=1,
     max_tokens=2500,
@@ -41,7 +38,14 @@ def generate_code(defintion_file : str):
     frequency_penalty=0,
     presence_penalty=0
   )
+  return response
 
+def generate_code(defintion_file : str):
+  file = defintion_file
+  with open(file, 'r') as file:
+      project = yaml.safe_load(file)
+
+  response = yaml_text_to_code(project)
   print(response)
   code = response.choices[0].message.content
   print(code)
