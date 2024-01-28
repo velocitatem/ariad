@@ -1,8 +1,0 @@
-# I want a user interface in streamlit that can create an ariad project definition in a yaml file by dynamically adding components and parts, there should be buttons that add new components to a list of components - same applies for parts, they should be fully modifiable, maybe using some dialogs or something, and then there should be a button that creates the yaml file and saves it to a projec-[name].yaml file in the current directory, but first shows it to the user in a text box or something so they can copy it and paste it into a file themselves if they want to. The result shoulf follow the exact structure as in other definitions and the syntax should be correct. Do not write any python code, just turn this idea/concept into a yaml definition as in other examples.
-
-Project:
-  Name: "Ariad Builder"
-  Description: "An Agentic System Builder"
-
-
-  
