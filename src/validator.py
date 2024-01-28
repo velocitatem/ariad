@@ -64,7 +64,7 @@ def process_IO(input_dict):
         print(f"Value: {input_dict['Value']}")
 
 # Load the YAML file
-with open('project.yaml', 'r') as file:
+with open('../project.yaml', 'r') as file:
     project = yaml.safe_load(file)
 
 # Validate the YAML file
@@ -83,7 +83,7 @@ for component in project["Project"]:
                 process_IO(project["Project"][component][part]["Output"])
 
 # Reformat the YAML file
-with open('project.yaml', 'w') as file:
+with open('../project.yaml', 'w') as file:
     yaml.dump(project, file, default_flow_style=False, sort_keys=False)
 
 print("The project definition is valid and has been reformatted.")
