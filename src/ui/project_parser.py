@@ -39,6 +39,9 @@ project_file = st.file_uploader("Upload a project file", type=["yaml", "yml"])
 if project_file is None:
     st.stop()
 
+# if doesnt exist create a tmp folder
+if not os.path.exists("tmp"):
+    os.makedirs("tmp")
 # save the project file to a temporary location
 with open(os.path.join("tmp", project_file.name), "wb") as tmp_file:
     tmp_file.write(project_file.getvalue())
