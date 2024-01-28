@@ -23,20 +23,11 @@ pip install ariad
 
 ### 🌟 Begin Your Odyssey
 
-```python
-from ariad import project
-
-# Start a new chapter or join an epic saga
-proj = project.create_or_join("your_epic_project")
-
-# Craft your module, your piece of the puzzle
-def my_module():
-    # Unleash your creativity here
-    pass
-
-# Elevate your module to the Ariad constellation
-proj.register_module(my_module)
-```
+1. Brainstorm your project idea and description.
+2. Let ChatGPT crate a preliminary project definition.
+   1. `ariad init` - this will open a website where you can describe your project.
+1. Start coding!
+   1. `ariad code` - this will open a website where you can explore your project and write code.
 
 ## 🌍 Join the Movement
 
